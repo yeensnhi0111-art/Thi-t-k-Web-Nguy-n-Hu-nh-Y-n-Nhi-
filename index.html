@@ -308,14 +308,14 @@
             color: var(--text-sub);
         }
 
-        /* ================= 2 KHUNG CHÂN MÈO 3 MÓNG LOANG MÀU PASTEL ================= */
+        /* ================= 2 KHUNG CHÂN MÈO 3 MÓNG LIỀN MẠCH ================= */
         .paw-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(290px, 340px));
             justify-content: center;
             gap: 64px;
             margin-bottom: 36px;
-            padding-top: 22px;
+            padding-top: 24px;
         }
 
         .paw-link {
@@ -324,56 +324,61 @@
             position: relative;
             width: 100%;
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            display: block;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .paw-link:hover {
             transform: translateY(-10px) scale(1.02);
         }
 
+        /* 3 móng gối sát vào mép trên đệm chân mèo */
         .paw-toes-3 {
             position: relative;
-            height: 48px;
-            width: 100%;
-            margin-bottom: -16px;
+            width: 240px;
+            height: 44px;
+            margin-bottom: -24px;
             z-index: 1;
         }
 
         .toe-3 {
             position: absolute;
-            width: 48px;
+            width: 50px;
             height: 54px;
-            border-radius: 50%;
+            border-radius: 50% 50% 42% 42%;
             border: 3px solid #ffffff;
             box-shadow: 0 4px 10px rgba(0,0,0,0.06);
         }
 
         .toe-3.left-toe {
-            left: 56px;
+            left: 24px;
             top: 10px;
-            transform: rotate(-18deg);
+            transform: rotate(-16deg);
             background: linear-gradient(135deg, #ffc2d1, #ffe5ec);
         }
 
         .toe-3.mid-toe {
             left: 50%;
             transform: translateX(-50%);
-            top: -2px;
+            top: 0px;
             background: linear-gradient(135deg, #bae1ff, #fff3bf);
         }
 
         .toe-3.right-toe {
-            right: 56px;
+            right: 24px;
             top: 10px;
-            transform: rotate(18deg);
+            transform: rotate(16deg);
             background: linear-gradient(135deg, #fff3bf, #d0ebff);
         }
 
+        /* Đệm bàn chân lớn bo bầu tự nhiên, khớp với 3 móng */
         .paw-pad {
+            width: 100%;
             position: relative;
             z-index: 2;
-            padding: 32px 26px 28px;
-            border-radius: 50% 50% 42% 42% / 44% 44% 52% 52%;
+            padding: 34px 26px 28px;
+            border-radius: 120px 120px 140px 140px / 95px 95px 135px 135px;
             border: 3px solid #ffffff;
             box-shadow: 0 12px 25px rgba(255, 133, 179, 0.2),
                         inset 0 0 20px rgba(255, 255, 255, 0.75);
@@ -477,12 +482,16 @@
                 margin-right: auto;
                 gap: 38px;
             }
+            .paw-toes-3 {
+                width: 215px;
+                margin-bottom: -22px;
+            }
             .toe-3 {
                 width: 44px;
-                height: 50px;
+                height: 48px;
             }
-            .toe-3.left-toe { left: 48px; }
-            .toe-3.right-toe { right: 48px; }
+            .toe-3.left-toe { left: 20px; }
+            .toe-3.right-toe { right: 20px; }
             .name-title {
                 font-size: 22px;
             }
@@ -684,7 +693,7 @@
         <p class="bio-text">
             Chào mừng bạn ghé thăm góc nhỏ lưu trữ các thành phẩm thiết kế web của mình!
             Mình yêu thích sáng tạo đồ họa, màu sắc pastel dễ thương và lập trình web.
-            Mời bạn bấm vào hai chiếc chân mèo bên dưới để khám phá nhé! 🎀
+            Mời bạn bấm vào hai chiếc chân mèo bên dưới để khám phá nha! 🎀
         </p>
 
         <!-- Hai thẻ hình chân mèo 3 móng loang màu pastel -->
@@ -699,7 +708,7 @@
                 </div>
                 <div class="paw-pad">
                     <div class="paw-icon">🌸</div>
-                    <div class="paw-title">CV của mình nè/div>
+                    <div class="paw-title">CV của mình nè</div>
                     <p class="paw-desc">
                         Trang giới thiệu bản thân, thông tin học vấn, sở thích và kỹ năng được thiết kế bằng HTML & CSS.
                     </p>
