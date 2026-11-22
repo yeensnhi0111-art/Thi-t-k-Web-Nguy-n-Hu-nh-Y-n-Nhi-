@@ -34,7 +34,105 @@
             color: var(--text-main);
         }
 
-        /* Nút bật/tắt nhạc nền .m4a */
+        /* ================= MÀN HÌNH CHÀO GẤU VẪY TAY ================= */
+        .welcome-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, #ffe3ec 0%, #e7f5ff 50%, #fff9db 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 24px;
+            cursor: pointer;
+            transition: opacity 0.6s ease, visibility 0.6s ease, transform 0.6s ease;
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.04);
+            pointer-events: none;
+        }
+
+        /* Bong bóng chữ "Xin chào!" */
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            color: #5c414d;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 14px 28px;
+            border-radius: 26px;
+            border: 3px solid #ffc2d1;
+            box-shadow: 0 10px 24px rgba(255, 133, 179, 0.22);
+            margin-bottom: 14px;
+            animation: popBounce 2.2s ease-in-out infinite;
+        }
+
+        .speech-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 12px 12px 0;
+            border-style: solid;
+            border-color: #ffffff transparent transparent transparent;
+        }
+
+        @keyframes popBounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .welcome-bear-svg {
+            width: 190px;
+            height: 175px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 12px 20px rgba(92, 65, 77, 0.12));
+        }
+
+        /* Chuyển động vẫy tay của gấu ở màn hình chào */
+        .intro-waving-arm {
+            transform-origin: 76px 104px;
+            animation: waveIntro 1.1s ease-in-out infinite;
+        }
+
+        @keyframes waveIntro {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-28deg); }
+            50% { transform: rotate(14deg); }
+            75% { transform: rotate(-24deg); }
+        }
+
+        .welcome-sub {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-sub);
+            margin-bottom: 18px;
+        }
+
+        .enter-btn {
+            background: linear-gradient(90deg, #ff85b3, #74c0fc, #ffd43b);
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 133, 179, 0.35);
+            transition: transform 0.25s ease;
+        }
+
+        .enter-btn:hover {
+            transform: scale(1.06);
+        }
+
+        /* ================= NÚT NHẠC GÓC PHẢI ================= */
         .music-btn {
             position: fixed;
             top: 20px;
@@ -60,7 +158,7 @@
             background: #fff0f6;
         }
 
-        /* Khung thẻ chính rộng rãi chuẩn giao diện laptop */
+        /* ================= KHUNG CHÍNH CỦA TRANG ================= */
         .main-card {
             position: relative;
             width: 100%;
@@ -73,6 +171,14 @@
                         0 8px 20px rgba(116, 192, 252, 0.14);
             padding: 52px 56px 38px;
             text-align: center;
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.65s ease 0.15s, transform 0.65s ease 0.15s;
+        }
+
+        .main-card.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* ================= TRANG TRÍ XUNG QUANH KHUNG ================= */
@@ -95,28 +201,33 @@
             50% { transform: translateY(-7px) rotate(5deg); }
         }
 
-        /* ================= AVATAR VUÔNG TO + GẤU NÚP PHÍA SAU ================= */
+        /* ================= AVATAR VUÔNG TO + GẤU VẪY TAY NÚP PHÍA SAU ================= */
         .avatar-wrapper {
             position: relative;
             width: 168px;
             height: 168px;
-            margin: 12px auto 22px;
+            margin: 18px auto 22px;
         }
 
-        /* Bé gấu núp sau góc trên bên phải khung ảnh */
+        /* Bé gấu vẫy tay núp phía sau góc trên bên phải khung ảnh */
         .peeking-bear {
             position: absolute;
-            top: -38px;
-            right: -20px;
-            width: 78px;
-            height: 65px;
+            top: -50px;
+            right: -34px;
+            width: 108px;
+            height: 92px;
             z-index: 1;
-            transform: rotate(18deg);
-            transition: transform 0.3s ease;
         }
 
-        .avatar-wrapper:hover .peeking-bear {
-            transform: rotate(24deg) translateY(-4px);
+        .avatar-waving-hand {
+            transform-origin: 18px 54px;
+            animation: waveAvatar 1.3s ease-in-out infinite;
+        }
+
+        @keyframes waveAvatar {
+            0%, 100% { transform: rotate(0deg); }
+            30% { transform: rotate(-26deg); }
+            60% { transform: rotate(12deg); }
         }
 
         /* Khung vuông bo góc dễ thương */
@@ -376,14 +487,68 @@
                 padding: 6px 12px;
                 font-size: 12px;
             }
+            .speech-bubble {
+                font-size: 20px;
+                padding: 12px 22px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- MÀN HÌNH CHÀO: GẤU VẪY TAY + CHỮ XIN CHÀO -->
+    <div id="welcomeScreen" class="welcome-overlay" title="Bấm để khám phá góc nhỏ của Yến Nhi">
+        <div class="speech-bubble">Xin chào! 👋🧸</div>
+
+        <!-- SVG Bé Gấu vẫy tay chào -->
+        <svg class="welcome-bear-svg" viewBox="0 0 160 150" xmlns="http://www.w3.org/2000/svg">
+            <!-- Tai trái & phải -->
+            <circle cx="44" cy="36" r="20" fill="#c68b59"/>
+            <circle cx="44" cy="36" r="11" fill="#f3d5b5"/>
+            <circle cx="116" cy="36" r="20" fill="#c68b59"/>
+            <circle cx="116" cy="36" r="11" fill="#f3d5b5"/>
+
+            <!-- Thân gấu -->
+            <ellipse cx="80" cy="116" rx="34" ry="26" fill="#c68b59"/>
+            <ellipse cx="80" cy="118" rx="20" ry="15" fill="#fff0db"/>
+
+            <!-- Chân trái & phải -->
+            <ellipse cx="60" cy="138" rx="14" ry="9" fill="#b07546"/>
+            <ellipse cx="100" cy="138" rx="14" ry="9" fill="#b07546"/>
+
+            <!-- Tay trái (để yên) -->
+            <ellipse cx="44" cy="112" rx="11" ry="16" transform="rotate(20 44 112)" fill="#c68b59"/>
+
+            <!-- Tay phải đang vẫy tay -->
+            <g class="intro-waving-arm">
+                <path d="M108 104 Q128 84 134 62" stroke="#c68b59" stroke-width="18" stroke-linecap="round" fill="none"/>
+                <circle cx="135" cy="58" r="12" fill="#c68b59"/>
+                <circle cx="135" cy="58" r="6" fill="#f3d5b5"/>
+            </g>
+
+            <!-- Đầu gấu -->
+            <ellipse cx="80" cy="68" rx="44" ry="36" fill="#c68b59"/>
+            <!-- Mắt -->
+            <circle cx="64" cy="62" r="4.5" fill="#3d2c2e"/>
+            <circle cx="96" cy="62" r="4.5" fill="#3d2c2e"/>
+            <circle cx="62.5" cy="60.5" r="1.5" fill="#ffffff"/>
+            <circle cx="94.5" cy="60.5" r="1.5" fill="#ffffff"/>
+            <!-- Má hồng -->
+            <ellipse cx="52" cy="72" rx="7" ry="4" fill="#ff9ebb" opacity="0.85"/>
+            <ellipse cx="108" cy="72" rx="7" ry="4" fill="#ff9ebb" opacity="0.85"/>
+            <!-- Mõm & Mũi -->
+            <ellipse cx="80" cy="75" rx="14" ry="10" fill="#fff0db"/>
+            <ellipse cx="80" cy="71" rx="5.5" ry="3.8" fill="#5c3a21"/>
+            <path d="M75 78 Q80 83 85 78" stroke="#5c3a21" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+
+        <p class="welcome-sub">Nhấp vào bé gấu hoặc nút bên dưới để bước vào góc nhỏ của Yến Nhi nha ✨</p>
+        <button id="openSiteBtn" class="enter-btn" type="button">Nhấp để mở trang 💖</button>
+    </div>
+
     <!-- Nhạc nền đuôi .m4a (tải file nhạc cùng thư mục trên GitHub) -->
     <audio id="bgMusic" loop preload="auto">
-        <source src="phimtat.vn-audio-3657.m4a" type="audio/mp4">
+        <source src="phimtat.vn-audio-5506.m4a" type="audio/mp4">
     </audio>
 
     <button id="musicToggle" class="music-btn" type="button" aria-label="Bật hoặc tắt nhạc nền">
@@ -391,7 +556,8 @@
         <span id="musicText">Bật nhạc</span>
     </button>
 
-    <div class="main-card">
+    <!-- TRANG CHÍNH -->
+    <div id="mainCard" class="main-card">
         <!-- Sticker trang trí xung quanh khung -->
         <span class="deco deco-bow">🎀</span>
         <span class="deco deco-star1">✨</span>
@@ -400,36 +566,44 @@
         <span class="deco deco-star2">⭐</span>
         <span class="deco deco-flower2">🌸</span>
 
-        <!-- Khung Avatar vuông to + Gấu núp phía sau -->
+        <!-- Khung Avatar vuông to + Gấu vẫy tay núp phía sau -->
         <div class="avatar-wrapper">
-            <!-- SVG Bé Gấu núp sau góc trên bên phải khung ảnh -->
-            <svg class="peeking-bear" viewBox="0 0 100 85" xmlns="http://www.w3.org/2000/svg">
+            <!-- SVG Bé Gấu vẫy tay núp sau góc trên bên phải khung ảnh -->
+            <svg class="peeking-bear" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Tay gấu đang vẫy -->
+                <g class="avatar-waving-hand">
+                    <path d="M18 56 Q6 36 12 18" stroke="#c68b59" stroke-width="13" stroke-linecap="round" fill="none"/>
+                    <circle cx="13" cy="15" r="9" fill="#c68b59"/>
+                    <circle cx="13" cy="15" r="4.5" fill="#f3d5b5"/>
+                </g>
+
                 <!-- Tai trái -->
-                <circle cx="24" cy="24" r="14" fill="#c68b59"/>
-                <circle cx="24" cy="24" r="8" fill="#f3d5b5"/>
+                <circle cx="42" cy="30" r="15" fill="#c68b59"/>
+                <circle cx="42" cy="30" r="8.5" fill="#f3d5b5"/>
                 <!-- Tai phải -->
-                <circle cx="76" cy="24" r="14" fill="#c68b59"/>
-                <circle cx="76" cy="24" r="8" fill="#f3d5b5"/>
+                <circle cx="94" cy="30" r="15" fill="#c68b59"/>
+                <circle cx="94" cy="30" r="8.5" fill="#f3d5b5"/>
+
                 <!-- Đầu gấu -->
-                <ellipse cx="50" cy="48" rx="34" ry="28" fill="#c68b59"/>
+                <ellipse cx="68" cy="56" rx="36" ry="30" fill="#c68b59"/>
                 <!-- Mắt -->
-                <circle cx="38" cy="43" r="3.5" fill="#3d2c2e"/>
-                <circle cx="62" cy="43" r="3.5" fill="#3d2c2e"/>
+                <circle cx="55" cy="50" r="3.8" fill="#3d2c2e"/>
+                <circle cx="81" cy="50" r="3.8" fill="#3d2c2e"/>
                 <!-- Má hồng -->
-                <ellipse cx="30" cy="50" rx="5" ry="3" fill="#ff9ebb" opacity="0.8"/>
-                <ellipse cx="70" cy="50" rx="5" ry="3" fill="#ff9ebb" opacity="0.8"/>
+                <ellipse cx="46" cy="58" rx="5.5" ry="3.2" fill="#ff9ebb" opacity="0.85"/>
+                <ellipse cx="90" cy="58" rx="5.5" ry="3.2" fill="#ff9ebb" opacity="0.85"/>
                 <!-- Mõm & Mũi -->
-                <ellipse cx="50" cy="53" rx="10" ry="7.5" fill="#fff0db"/>
-                <ellipse cx="50" cy="50" rx="4" ry="2.8" fill="#5c3a21"/>
-                <path d="M47 55 Q50 58 53 55" stroke="#5c3a21" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <ellipse cx="68" cy="61" rx="11" ry="8" fill="#fff0db"/>
+                <ellipse cx="68" cy="57.5" rx="4.2" ry="3" fill="#5c3a21"/>
+                <path d="M64.5 63.5 Q68 67 71.5 63.5" stroke="#5c3a21" stroke-width="2.2" fill="none" stroke-linecap="round"/>
             </svg>
 
             <!-- Nơ xinh trên góc trái ảnh -->
             <span class="avatar-bow">🎀</span>
 
-            <!-- Khung vuông ảnh đại diện đuôi .jpeg -->
+            <!-- Khung vuông ảnh đại diện -->
             <div class="avatar-box">
-                <img src="avatar.jpeg" alt="Nguyễn Huỳnh Yến Nhi" onerror="this.src='https://api.dicebear.com/9.x/adventurer/svg?seed=YenNhi&backgroundColor=ffd6e7'">
+                <img src="IMG_1027.jpeg" alt="Nguyễn Huỳnh Yến Nhi" onerror="this.src='https://api.dicebear.com/9.x/adventurer/svg?seed=YenNhi&backgroundColor=ffd6e7'">
             </div>
         </div>
 
@@ -439,9 +613,9 @@
 
         <!-- Giới thiệu ngắn gọn -->
         <p class="bio-text">
-            Chào mừng bạn ghé thăm góc nhỏ lưu trữ các sản phẩm thiết kế web của mình! 
+            Chào mừng bạn ghé thăm góc nhỏ lưu trữ các thành phẩm thiết kế web của mình! 
             Mình yêu thích sáng tạo đồ họa, màu sắc pastel dễ thương và lập trình web. 
-            Mời bạn bấm vào hai chiếc chân mèo bên dưới để khám phá nhé! 🌸✨
+            Mời bạn bấm vào hai chiếc chân mèo bên dưới để khám phá nhaa!🎀
         </p>
 
         <!-- Hai thẻ hình chân mèo loang màu pastel -->
@@ -457,11 +631,11 @@
                 </div>
                 <div class="paw-pad">
                     <div class="paw-icon">🪪</div>
-                    <div class="paw-title">CV Cá Nhân Online</div>
+                    <div class="paw-title">CV của mình nè</div>
                     <p class="paw-desc">
                         Trang giới thiệu bản thân, thông tin học vấn, sở thích và kỹ năng được thiết kế bằng HTML & CSS.
                     </p>
-                    <span class="paw-btn">Xem CV ngay ➜</span>
+                    <span class="paw-btn">Khám phá ngay ➜</span>
                 </div>
             </a>
 
@@ -475,11 +649,11 @@
                 </div>
                 <div class="paw-pad">
                     <div class="paw-icon">🐠</div>
-                    <div class="paw-title">Website Hồ Cá Mini</div>
+                    <div class="paw-title">Hồ cá mini siêu dễ thương</div>
                     <p class="paw-desc">
                         Thế giới đại dương thu nhỏ sinh động với các sinh vật biển bơi lội và hiệu ứng bong bóng chữ.
                     </p>
-                    <span class="paw-btn">Khám phá Hồ Cá ➜</span>
+                    <span class="paw-btn">Vào xem nha ➜</span>
                 </div>
             </a>
 
@@ -494,6 +668,9 @@
     </div>
 
     <script>
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const openSiteBtn = document.getElementById('openSiteBtn');
+        const mainCard = document.getElementById('mainCard');
         const bgMusic = document.getElementById('bgMusic');
         const musicToggle = document.getElementById('musicToggle');
         const musicIcon = document.getElementById('musicIcon');
@@ -511,6 +688,26 @@
             }
         }
 
+        function enterMainSite() {
+            welcomeScreen.classList.add('hidden');
+            mainCard.classList.add('visible');
+
+            // Khi người dùng bấm mở trang, trình duyệt cho phép phát nhạc nền mượt mà
+            if (!isPlaying) {
+                bgMusic.play().then(() => {
+                    updateMusicUI(true);
+                }).catch(() => {
+                    updateMusicUI(false);
+                });
+            }
+        }
+
+        welcomeScreen.addEventListener('click', enterMainSite);
+        openSiteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            enterMainSite();
+        });
+
         musicToggle.addEventListener('click', () => {
             if (!isPlaying) {
                 bgMusic.play().then(() => {
@@ -523,17 +720,6 @@
                 updateMusicUI(false);
             }
         });
-
-        // Thử tự phát nhẹ nhàng khi người dùng chạm vào trang lần đầu
-        document.addEventListener('click', function autoPlayOnce(e) {
-            if (e.target.closest('#musicToggle')) return;
-            if (!isPlaying) {
-                bgMusic.play().then(() => {
-                    updateMusicUI(true);
-                }).catch(() => {});
-            }
-            document.removeEventListener('click', autoPlayOnce);
-        }, { once: true });
     </script>
 
 </body>
